@@ -14,6 +14,7 @@ public class MainWindow extends javax.swing.JFrame {
     PanelTransaction paneltransaction = new PanelTransaction();
     PanelHome panelHome= new PanelHome();
     PanelMenu panelMenu =new PanelMenu();
+    PanelUsuario panelUsuario=new PanelUsuario();
     public MainWindow() {
         initComponents();
     }
@@ -34,9 +35,10 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         btnInicio = new javax.swing.JButton();
         btnMenu = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnUsuario = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         panelContainer = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -80,11 +82,15 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jToolBar1.add(btnMenu);
 
-        jButton3.setText("jButton3");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
+        btnUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/usuarios.png"))); // NOI18N
+        btnUsuario.setText("Usuarios");
+        btnUsuario.setFocusable(false);
+        btnUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuarioActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnUsuario);
 
         jButton4.setText("jButton4");
         jButton4.setFocusable(false);
@@ -97,6 +103,12 @@ public class MainWindow extends javax.swing.JFrame {
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton5);
+
+        jButton1.setText("jButton1");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
 
         javax.swing.GroupLayout panelHeaderLayout = new javax.swing.GroupLayout(panelHeader);
         panelHeader.setLayout(panelHeaderLayout);
@@ -165,6 +177,10 @@ public class MainWindow extends javax.swing.JFrame {
     paneltransaction.cambiarPanel(panelContainer, panelMenu);
     }//GEN-LAST:event_btnMenuActionPerformed
 
+    private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
+    paneltransaction.cambiarPanel(panelContainer, panelUsuario);
+    }//GEN-LAST:event_btnUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -204,7 +220,8 @@ public class MainWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnMenu;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnUsuario;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
