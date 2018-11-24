@@ -5,14 +5,13 @@
  */
 package restaurant;
 
-import java.awt.CardLayout;
-
+import CodeHelpers.PanelTransaction;
 /**
  *
  * @author shelb
  */
 public class MainWindow extends javax.swing.JFrame {
-
+    PanelTransaction paneltransaction = new PanelTransaction();
     PanelHome panelHome= new PanelHome();
     PanelMenu panelMenu =new PanelMenu();
     public MainWindow() {
@@ -33,8 +32,8 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnInicio = new javax.swing.JButton();
+        btnMenu = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -61,25 +60,25 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/home.png"))); // NOI18N
-        jButton1.setText("Inicio");
-        jButton1.setFocusable(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/home.png"))); // NOI18N
+        btnInicio.setText("Inicio");
+        btnInicio.setFocusable(false);
+        btnInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnInicioActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton1);
+        jToolBar1.add(btnInicio);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/menu.png"))); // NOI18N
-        jButton2.setText("Menú");
-        jButton2.setFocusable(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/menu.png"))); // NOI18N
+        btnMenu.setText("Menú");
+        btnMenu.setFocusable(false);
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnMenuActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton2);
+        jToolBar1.add(btnMenu);
 
         jButton3.setText("jButton3");
         jButton3.setFocusable(false);
@@ -154,22 +153,17 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    CardLayout cardLayout = (CardLayout) panelContainer.getLayout();
-    cardLayout.show(panelContainer, "panelHome");
-
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
+    paneltransaction.cambiarPanel(panelContainer, panelHome);
+    }//GEN-LAST:event_btnInicioActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       panelContainer.add(panelHome, "panelHome");
-       panelContainer.add(panelMenu, "panelMenu");
+    paneltransaction.cambiarPanel(panelContainer, panelHome);
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    CardLayout cardLayout = (CardLayout) panelContainer.getLayout();
-    cardLayout.show(panelContainer, "panelMenu");
-
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+    paneltransaction.cambiarPanel(panelContainer, panelMenu);
+    }//GEN-LAST:event_btnMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,8 +202,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnInicio;
+    private javax.swing.JButton btnMenu;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
