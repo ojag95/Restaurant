@@ -5,17 +5,33 @@
  */
 package restaurant;
 
-/**
- *
- * @author shelb
- */
+import CodeHelpers.ConexionesDB;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 public class PanelMenu extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PanelHome
-     */
+ConexionesDB conector= new ConexionesDB();
+
+String nombrePlatillo="";
+String descripcionPlatillo="";
+Float precioPlatillo=0.0f;
+ResultSet resultadoConsulta;
+ArrayList array;
+DefaultListModel modelo;
+
     public PanelMenu() {
         initComponents();
+        array= new ArrayList();
+        modelo = new DefaultListModel();
+        listaProductos.setModel(modelo);
+        consultaGeneralPlatillos();
+
+        
     }
 
     /**
@@ -32,7 +48,7 @@ public class PanelMenu extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listaProductos = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnEditar = new CustomSwingObjects.CustomJButtonS();
@@ -54,13 +70,14 @@ public class PanelMenu extends javax.swing.JPanel {
         jSplitPane1.setDividerLocation(550);
         jSplitPane1.setResizeWeight(0.9);
 
-        jList1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        listaProductos.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        listaProductos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listaProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaProductosValueChanged(evt);
+            }
         });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(listaProductos);
 
         jSplitPane1.setLeftComponent(jScrollPane2);
 
@@ -69,7 +86,7 @@ public class PanelMenu extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel4.setText("Información");
 
-        btnEditar.setText("Editar");
+        btnEditar.setText("Nuevo");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -97,6 +114,12 @@ public class PanelMenu extends javax.swing.JPanel {
         });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.setEnabled(false);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -105,7 +128,7 @@ public class PanelMenu extends javax.swing.JPanel {
             .addComponent(txtNombre)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
             .addComponent(txtPrecio)
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -115,7 +138,7 @@ public class PanelMenu extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(86, 86, 86))
+                .addGap(64, 64, 64))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,7 +158,7 @@ public class PanelMenu extends javax.swing.JPanel {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(37, 37, 37)
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -149,20 +172,19 @@ public class PanelMenu extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSplitPane1)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(98, 98, 98))))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -176,7 +198,7 @@ public class PanelMenu extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -188,6 +210,19 @@ public class PanelMenu extends javax.swing.JPanel {
     changeStatus();        // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        
+
+              registrarPlatillo();
+        
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void listaProductosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaProductosValueChanged
+       String itemSeleccionado[]=listaProductos.getSelectedValue().split(" ");
+       String idSeleccionado=itemSeleccionado[0];
+        consultaEspecificaPlatillos(idSeleccionado);
+    }//GEN-LAST:event_listaProductosValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private CustomSwingObjects.CustomJButtonS btnEditar;
@@ -197,13 +232,13 @@ public class PanelMenu extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JList<String> listaProductos;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
@@ -239,12 +274,90 @@ public void changeStatus()
     }
     else
     {
-         btnEditar.setText("Editar");
+         btnEditar.setText("Nuevo");
          txtNombre.setText("");
          txtDescripcion.setText("");
          txtPrecio.setText("");
          btnGuardar.setEnabled(false);
     }
 }
+
+
+public void registrarPlatillo()
+{
+   if(txtNombre.getText().equals(""))
+   {
+       JOptionPane.showMessageDialog(null, "El campo nombre no puede estar vacio");
+   }
+   else if(txtDescripcion.getText().equals(""))
+   {
+       JOptionPane.showMessageDialog(null, "El campo descripción no puede estar vacio");
+   }
+   else if(txtPrecio.getText().equals(""))
+   {
+       
+        JOptionPane.showMessageDialog(null, "El campo precio no puede estar vacio");
+
+   }
+   else
+   {
+       nombrePlatillo=txtNombre.getText();
+       descripcionPlatillo=txtDescripcion.getText();
+       try{
+            precioPlatillo=Float.parseFloat(txtPrecio.getText());
+            String salida=conector.registrar("call registroPlatillo('"+nombrePlatillo+"','"+descripcionPlatillo+"',"+precioPlatillo+");");
+            JOptionPane.showMessageDialog(null, salida);
+            txtDescripcion.setText("");
+            txtNombre.setText("");
+            txtPrecio.setText("");
+
+       }catch(Exception e)
+       {
+            JOptionPane.showMessageDialog(null, "El campo precio no tiene un valor numerico");
+       }
+   }
+
+}
+
+
+public void consultaGeneralPlatillos()
+{
+    resultadoConsulta=conector.consulta("select * from Platillos;");
+    modelo.removeAllElements();
+    try {
+        while(resultadoConsulta.next())
+        {
+            
+            System.out.println(resultadoConsulta.getString("nombrePlatillo"));
+            array.add(resultadoConsulta.getString("idPlatillo")+" "+resultadoConsulta.getString("nombrePlatillo"));
+             
+        }
+        for (int i = 0; i < array.size(); i++) {
+                modelo.addElement(array.get(i));
+             }
+       listaProductos.setSelectedIndex(0);
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cargar el menu");
+    }
+}
+
+
+public void consultaEspecificaPlatillos(String idPLatillo)
+{
+    resultadoConsulta=conector.consulta("select * from Platillos where idPlatillo="+idPLatillo+";");
+    try {
+        while(resultadoConsulta.next())
+        {
+            txtNombre.setText(resultadoConsulta.getString("nombrePlatillo"));
+            txtDescripcion.setText(resultadoConsulta.getString("descripcion"));
+            txtPrecio.setText(resultadoConsulta.getString("precioPlatillo"));
+             
+        }
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cargar el menu");
+    }
+}
+
 
 }

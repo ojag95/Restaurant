@@ -14,7 +14,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 public class ConexionesDB {
-    String conexion="jdbc:mysql://localhost:3306/ventas";
+    String conexion="jdbc:mariadb://localhost:3306/Restaurant";
     String userdb="root";
     String passdb="sasa";
     Connection conn;

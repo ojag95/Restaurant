@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/shelb/Documents/NetBeansProjects/Restaurant/src/restaurant/PanelMenu.java</file>
-            <file>file:/C:/Users/shelb/Documents/NetBeansProjects/Restaurant/src/CustomSwingObjects/CustomJButtonS.java</file>
-            <file>file:/C:/Users/shelb/Documents/NetBeansProjects/Restaurant/src/restaurant/MainWindow.java</file>
-            <file>file:/C:/Users/shelb/Documents/NetBeansProjects/Restaurant/src/restaurant/Login.java</file>
-            <file>file:/C:/Users/shelb/Documents/NetBeansProjects/Restaurant/src/restaurant/PanelHome.java</file>
-            <file>file:/C:/Users/shelb/Documents/NetBeansProjects/Restaurant/src/restaurant/Restaurant.java</file>
-            <file>file:/C:/Users/shelb/Documents/NetBeansProjects/Restaurant/src/CustomSwingObjects/CustomJButtonL.java</file>
+            <file>file:/home/oscar/Restaurant/Restaurant/src/CodeHelpers/ConexionesDB.java</file>
+            <file>file:/home/oscar/Restaurant/Restaurant/src/restaurant/Login.java</file>
+            <file>file:/home/oscar/Restaurant/Restaurant/src/restaurant/MainWindow.java</file>
+            <file>file:/home/oscar/Restaurant/Restaurant/src/restaurant/PanelHome.java</file>
+            <file>file:/home/oscar/Restaurant/Restaurant/src/restaurant/PanelUsuario.java</file>
+            <file>file:/home/oscar/Restaurant/Restaurant/src/restaurant/PanelMenu.java</file>
+            <file>file:/home/oscar/Restaurant/Restaurant/src/CodeHelpers/PanelTransaction.java</file>
+            <file>file:/home/oscar/Restaurant/Restaurant/src/restaurant/Restaurant.java</file>
         </group>
     </open-files>
 </project-private>
