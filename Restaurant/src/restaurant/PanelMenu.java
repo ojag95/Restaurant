@@ -23,6 +23,10 @@ Float precioPlatillo=0.0f;
 ResultSet resultadoConsulta;
 ArrayList array;
 DefaultListModel modelo;
+int opcion;//opcion 0 sin cambios, opcion 1 Modificar, opcion 2 registrar nuevo 
+               
+        String itemSeleccionado[];
+               String idSeleccionado;
 
     public PanelMenu() {
         initComponents();
@@ -51,7 +55,6 @@ DefaultListModel modelo;
         listaProductos = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        btnEditar = new CustomSwingObjects.CustomJButtonS();
         txtNombre = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -59,6 +62,10 @@ DefaultListModel modelo;
         txtDescripcion = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
         txtPrecio = new javax.swing.JTextField();
+        jToolBar1 = new javax.swing.JToolBar();
+        btnEliminar = new CustomSwingObjects.CustomJButtonS();
+        btnModificar = new CustomSwingObjects.CustomJButtonS();
+        btnNuevo = new CustomSwingObjects.CustomJButtonS();
         btnGuardar = new CustomSwingObjects.CustomJButtonS();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -86,13 +93,6 @@ DefaultListModel modelo;
         jLabel4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel4.setText("Información");
 
-        btnEditar.setText("Nuevo");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-
         txtNombre.setEditable(false);
 
         jLabel1.setText("Nombre");
@@ -113,6 +113,43 @@ DefaultListModel modelo;
             }
         });
 
+        jToolBar1.setBackground(new java.awt.Color(254, 254, 254));
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/baseline_delete_black_18dp.png"))); // NOI18N
+        btnEliminar.setText("");
+        btnEliminar.setPressedIcon(null);
+        btnEliminar.setRolloverIcon(null);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnEliminar);
+
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/baseline_edit_black_18dp.png"))); // NOI18N
+        btnModificar.setText("");
+        btnModificar.setPressedIcon(null);
+        btnModificar.setRolloverIcon(null);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnModificar);
+
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/baseline_playlist_add_black_18dp.png"))); // NOI18N
+        btnNuevo.setText("");
+        btnNuevo.setPressedIcon(null);
+        btnNuevo.setRolloverIcon(null);
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnNuevo);
+
         btnGuardar.setText("Guardar");
         btnGuardar.setEnabled(false);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -128,24 +165,24 @@ DefaultListModel modelo;
             .addComponent(txtNombre)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
             .addComponent(txtPrecio)
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(112, 112, 112))
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addGap(5, 5, 5)
@@ -158,9 +195,9 @@ DefaultListModel modelo;
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(30, 30, 30)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44))
         );
 
         jSplitPane1.setRightComponent(jPanel2);
@@ -172,7 +209,7 @@ DefaultListModel modelo;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+                    .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 807, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -184,7 +221,7 @@ DefaultListModel modelo;
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+                .addComponent(jSplitPane1)
                 .addContainerGap())
         );
 
@@ -198,7 +235,7 @@ DefaultListModel modelo;
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -206,27 +243,53 @@ DefaultListModel modelo;
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-    changeStatus();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarActionPerformed
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        changeStatus();        
+        opcion =2;
+        changeStatus();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         
-
-              registrarPlatillo();
+            if(opcion==1)
+            {
+             actualizar();
+            }else if(opcion==2)
+            {
+             registrarPlatillo();
+            }
+         opcion=0;
+              
         
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void listaProductosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaProductosValueChanged
-       String itemSeleccionado[]=listaProductos.getSelectedValue().split(" ");
-       String idSeleccionado=itemSeleccionado[0];
+        try{       
+        itemSeleccionado=listaProductos.getSelectedValue().split(" ");
+        idSeleccionado=itemSeleccionado[0];
         consultaEspecificaPlatillos(idSeleccionado);
+        }
+        catch(Exception e)
+        {
+            listaProductos.setSelectedIndex(0);
+        }
     }//GEN-LAST:event_listaProductosValueChanged
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        eliminar();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        opcion=1;
+        changeStatus();
+    }//GEN-LAST:event_btnModificarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private CustomSwingObjects.CustomJButtonS btnEditar;
+    private CustomSwingObjects.CustomJButtonS btnEliminar;
     private CustomSwingObjects.CustomJButtonS btnGuardar;
+    private CustomSwingObjects.CustomJButtonS btnModificar;
+    private CustomSwingObjects.CustomJButtonS btnNuevo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -238,6 +301,7 @@ DefaultListModel modelo;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JList<String> listaProductos;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNombre;
@@ -245,41 +309,82 @@ DefaultListModel modelo;
     // End of variables declaration//GEN-END:variables
 public void changeStatus()
 {
-    if(txtNombre.isEditable())
+    if(opcion==1)
     {
-        txtNombre.setEditable(false);
-    }
-    else{
-        txtNombre.setEditable(true);
-    }
-    if(txtDescripcion.isEditable())
-    {
-        txtDescripcion.setEditable(false);
-    }
-    else{
-        txtDescripcion.setEditable(true);
-    }
-    if(txtPrecio.isEditable())
-    {
-        txtPrecio.setEditable(false);
-    }
-    else{
-        txtPrecio.setEditable(true);
-    }
-    if(txtNombre.isEditable())
-    {
-         btnEditar.setText("Cancelar");
-         btnGuardar.setEnabled(true);
+         if(txtNombre.isEditable())
+        {
+            txtNombre.setEditable(false);
+        }
+        else{
+            txtNombre.setEditable(true);
+        }
+        if(txtDescripcion.isEditable())
+        {
+            txtDescripcion.setEditable(false);
+        }
+        else{
+            txtDescripcion.setEditable(true);
+        }
+        if(txtPrecio.isEditable())
+        {
+            txtPrecio.setEditable(false);
+        }
+        else{
+            txtPrecio.setEditable(true);
+        }
+        if(txtNombre.isEditable())
+        {
+             btnGuardar.setEnabled(true);
 
+        }
+        else
+        {
+
+             btnGuardar.setEnabled(false);
+        }
+    
     }
-    else
+    else if(opcion==2)
     {
-         btnEditar.setText("Nuevo");
-         txtNombre.setText("");
-         txtDescripcion.setText("");
-         txtPrecio.setText("");
-         btnGuardar.setEnabled(false);
+            if(txtNombre.isEditable())
+        {
+            txtNombre.setEditable(false);
+        }
+        else{
+            txtNombre.setEditable(true);
+            txtNombre.setText("");
+
+        }
+        if(txtDescripcion.isEditable())
+        {
+            txtDescripcion.setEditable(false);
+        }
+        else{
+            txtDescripcion.setEditable(true);
+            txtDescripcion.setText("");
+
+        }
+        if(txtPrecio.isEditable())
+        {
+            txtPrecio.setEditable(false);
+        }
+        else{
+            txtPrecio.setEditable(true);
+            txtPrecio.setText("");
+
+        }
+        if(txtNombre.isEditable())
+        {
+             btnGuardar.setEnabled(true);
+
+        }
+        else
+        {
+             btnGuardar.setEnabled(false);
+        }
     }
+    
+    
 }
 
 
@@ -310,6 +415,7 @@ public void registrarPlatillo()
             txtDescripcion.setText("");
             txtNombre.setText("");
             txtPrecio.setText("");
+            consultaGeneralPlatillos();
 
        }catch(Exception e)
        {
@@ -322,15 +428,13 @@ public void registrarPlatillo()
 
 public void consultaGeneralPlatillos()
 {
-    resultadoConsulta=conector.consulta("select * from Platillos;");
     modelo.removeAllElements();
+    resultadoConsulta=conector.consulta("select * from Platillos;");
+    array.clear();
     try {
         while(resultadoConsulta.next())
         {
-            
-            System.out.println(resultadoConsulta.getString("nombrePlatillo"));
-            array.add(resultadoConsulta.getString("idPlatillo")+" "+resultadoConsulta.getString("nombrePlatillo"));
-             
+            array.add(resultadoConsulta.getString("idPlatillo")+" "+resultadoConsulta.getString("nombrePlatillo"));     
         }
         for (int i = 0; i < array.size(); i++) {
                 modelo.addElement(array.get(i));
@@ -359,5 +463,24 @@ public void consultaEspecificaPlatillos(String idPLatillo)
     }
 }
 
+
+public void eliminar()
+        
+{
+    String estado=conector.eliminar("delete from Platillos where idPlatillo="+idSeleccionado+";");
+    JOptionPane.showMessageDialog(null, estado);
+    consultaGeneralPlatillos();
+    
+}
+
+
+public void actualizar()
+{
+    nombrePlatillo=txtNombre.getText();
+    descripcionPlatillo=txtDescripcion.getText();
+    precioPlatillo=Float.parseFloat(txtPrecio.getText());
+    String estado=conector.registrar("update Platillos set nombrePlatillo='"+nombrePlatillo+"',descripcion='"+descripcionPlatillo+"',precioPlatillo="+precioPlatillo+" where idPlatillo="+idSeleccionado+";");
+    consultaGeneralPlatillos();
+}
 
 }
