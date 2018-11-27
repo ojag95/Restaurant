@@ -172,7 +172,7 @@ public class PanelMenu extends javax.swing.JPanel {
             .addComponent(txtNombre)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
             .addComponent(txtPrecio)
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -210,6 +210,18 @@ public class PanelMenu extends javax.swing.JPanel {
         jSplitPane1.setRightComponent(jPanel2);
 
         txtBuscar.setEditable(false);
+        txtBuscar.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txtBuscarInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/baseline_search_black_18dp.png"))); // NOI18N
         btnBuscar.setText("");
@@ -283,7 +295,7 @@ public class PanelMenu extends javax.swing.JPanel {
             registrarPlatillo();
         }
         opcion = 0;
-
+        changeStatus();
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -307,7 +319,7 @@ public class PanelMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-  
+
         String Buscar = txtBuscar.getText();
         modelo.removeAllElements();
         resultadoConsulta = conector.consulta("select * from Platillos where nombrePlatillo like '%" + Buscar + "%' or idPlatillo like '%" + Buscar + "%' ");
@@ -317,7 +329,7 @@ public class PanelMenu extends javax.swing.JPanel {
                 array.add(resultadoConsulta.getString("idPlatillo") + " " + resultadoConsulta.getString("nombrePlatillo"));
             }
             for (int i = 0; i < array.size(); i++) {
-                    modelo.addElement("00"+array.get(i));
+                modelo.addElement("00" + array.get(i));
             }
             listaProductos.setSelectedIndex(0);
         } catch (SQLException ex) {
@@ -328,6 +340,14 @@ public class PanelMenu extends javax.swing.JPanel {
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void txtBuscarInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtBuscarInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarInputMethodTextChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -409,7 +429,30 @@ public void changeStatus() {
                 btnGuardar.setEnabled(false);
             }
         }
+        if (opcion == 0) {
+            if (txtNombre.isEditable()) {
+                txtNombre.setEditable(false);
+            } else {
+                txtNombre.setEditable(true);
+            }
+            if (txtDescripcion.isEditable()) {
+                txtDescripcion.setEditable(false);
+            } else {
+                txtDescripcion.setEditable(true);
+            }
+            if (txtPrecio.isEditable()) {
+                txtPrecio.setEditable(false);
+            } else {
+                txtPrecio.setEditable(true);
+            }
+            if (txtNombre.isEditable()) {
+                btnGuardar.setEnabled(false);
 
+            } else {
+
+                btnGuardar.setEnabled(true);
+            }
+        }
     }
 
     public void registrarPlatillo() {
@@ -450,7 +493,7 @@ public void changeStatus() {
                 array.add(resultadoConsulta.getString("idPlatillo") + " " + resultadoConsulta.getString("nombrePlatillo"));
             }
             for (int i = 0; i < array.size(); i++) {
-                    modelo.addElement("00" + array.get(i));
+                modelo.addElement("00" + array.get(i));
             }
             listaProductos.setSelectedIndex(0);
         } catch (SQLException ex) {

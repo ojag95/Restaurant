@@ -211,7 +211,7 @@ public class PanelUsuario extends javax.swing.JPanel {
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
                 .addGap(112, 112, 112))
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -219,19 +219,14 @@ public class PanelUsuario extends javax.swing.JPanel {
             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDireccion)
-                            .addComponent(txtTelefono)
-                            .addComponent(txtApellido)
-                            .addComponent(txtNombre)
-                            .addComponent(txtContrasenia)
-                            .addComponent(txtUsuario))
-                        .addContainerGap())))
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(txtNombre)
+            .addComponent(txtApellido)
+            .addComponent(txtDireccion)
+            .addComponent(txtTelefono)
+            .addComponent(txtUsuario)
+            .addComponent(txtContrasenia)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,7 +302,7 @@ public class PanelUsuario extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -315,9 +310,8 @@ public class PanelUsuario extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSplitPane1)
@@ -349,7 +343,7 @@ public class PanelUsuario extends javax.swing.JPanel {
         if (opcion == 1) {
             actualizar();
         } else if (opcion == 2) {
-            registrarPlatillo();
+            registrarMesero();
         }
         opcion = 0;
 
@@ -495,6 +489,7 @@ public void changeStatus() {
 
                 btnGuardar.setEnabled(false);
             }
+
         } else if (opcion == 2) {
             if (txtNombre.isEditable()) {
                 txtNombre.setEditable(false);
@@ -534,24 +529,21 @@ public void changeStatus() {
                 btnGuardar.setEnabled(false);
             }
         }
-
     }
 
-    public void registrarPlatillo() {
-        if (txtDireccion.getText().equals("")) {
+    public void registrarMesero() {
+        if (txtNombre.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "El campo nombre no puede estar vacio");
-        } else if (txtNombre.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo descripción no puede estar vacio");
         } else if (txtApellido.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo descripción no puede estar vacio");
+            JOptionPane.showMessageDialog(null, "El campo Apellido no puede estar vacio");
+        } else if (txtDireccion.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "El campo Direccion no puede estar vacio");
         } else if (txtTelefono.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo descripción no puede estar vacio");
+            JOptionPane.showMessageDialog(null, "El campo Telefono no puede estar vacio");
         } else if (txtUsuario.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo descripción no puede estar vacio");
+            JOptionPane.showMessageDialog(null, "El campo Usuario no puede estar vacio");
         } else if (txtContrasenia.getText().equals("")) {
-
-            JOptionPane.showMessageDialog(null, "El campo precio no puede estar vacio");
-
+            JOptionPane.showMessageDialog(null, "El campo Contraseña no puede estar vacio");
         } else {
             nombre = txtNombre.getText();
             apellidoP = txtApellido.getText();
@@ -559,20 +551,17 @@ public void changeStatus() {
             telefono = txtTelefono.getText();
             usuario = txtUsuario.getText();
             contrasenia = txtContrasenia.getText();
-            try {
-                String salida = conector.registrar("call registroMesero('" + nombre + "','" + apellidoP + "'," + direccion + "'," + telefono + "'," + usuario + "'," + contrasenia + ");");
-                JOptionPane.showMessageDialog(null, salida);
-                txtNombre.setText("");
-                txtApellido.setText("");
-                txtDireccion.setText("");
-                txtTelefono.setText("");
-                txtUsuario.setText("");
-                txtContrasenia.setText("");
-                consultaGeneralMesero();
 
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "El campo precio no tiene un valor numerico");
-            }
+            String salida = conector.registrar("call registroMesero('" + nombre + "','" + apellidoP + "'," + direccion + "'," + telefono + "'," + usuario + "'," + contrasenia + ");");
+            JOptionPane.showMessageDialog(null, salida);
+            txtNombre.setText("");
+            txtApellido.setText("");
+            txtDireccion.setText("");
+            txtTelefono.setText("");
+            txtUsuario.setText("");
+            txtContrasenia.setText("");
+            consultaGeneralMesero();
+
         }
 
     }
@@ -608,7 +597,7 @@ public void changeStatus() {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cargar el menu");
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cargar los usuarios");
         }
     }
 
@@ -626,9 +615,7 @@ public void changeStatus() {
         telefono = txtTelefono.getText();
         usuario = txtUsuario.getText();
         contrasenia = txtContrasenia.getText();
-        String estado = conector.registrar("update mesero set nombre='" + nombre + "',apellidoP='"
-                + apellidoP + "',direccion=" + direccion + "',telefono=" + telefono + "',usuario=" + usuario
-                + "',contrasenia=" + contrasenia + " where noEmpleado=" + idSeleccionado + ";");
+        String estado = conector.registrar("update mesero set nombre='" + nombre + "',apellidoP='" + apellidoP + "',direccion=" + direccion + "',telefono=" + telefono + "',usuario=" + usuario + "',contrasenia=" + contrasenia + " where noEmpleado=" + idSeleccionado + ";");
         consultaGeneralMesero();
     }
 
