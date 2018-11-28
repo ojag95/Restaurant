@@ -333,7 +333,7 @@ public class PanelUsuario extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        changeStatus();
+        // changeStatus();
         opcion = 2;
         changeStatus();        // TODO add your handling code here:
     }//GEN-LAST:event_btnNuevoActionPerformed
@@ -346,7 +346,7 @@ public class PanelUsuario extends javax.swing.JPanel {
             registrarMesero();
         }
         opcion = 0;
-
+        changeStatus();
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -383,7 +383,7 @@ public class PanelUsuario extends javax.swing.JPanel {
             }
             listaProductos.setSelectedIndex(0);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cargar el menu");
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error, intentalo mas tarde");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -484,13 +484,56 @@ public void changeStatus() {
             }
             if (txtNombre.isEditable()) {
                 btnGuardar.setEnabled(true);
+            } else {
+                btnGuardar.setEnabled(false);
+            }
+
+        } else if (opcion == 2) {
+            if (txtNombre.isEditable()) {
+                txtNombre.setEditable(false);
+            } else {
+                txtNombre.setEditable(true);
+                txtNombre.setText("");
+            }
+            if (txtApellido.isEditable()) {
+                txtApellido.setEditable(false);
+            } else {
+                txtApellido.setEditable(true);
+                txtApellido.setText("");
+            }
+            if (txtDireccion.isEditable()) {
+                txtDireccion.setEditable(false);
+            } else {
+                txtDireccion.setEditable(true);
+                txtDireccion.setText("");
+            }
+            if (txtTelefono.isEditable()) {
+                txtTelefono.setEditable(false);
+            } else {
+                txtTelefono.setEditable(true);
+                txtTelefono.setText("");
+            }
+            if (txtUsuario.isEditable()) {
+                txtUsuario.setEditable(false);
+            } else {
+                txtUsuario.setEditable(true);
+                txtUsuario.setText("");
+            }
+            if (txtContrasenia.isEditable()) {
+                txtContrasenia.setEditable(false);
+            } else {
+                txtContrasenia.setEditable(true);
+                txtContrasenia.setText("");
+            }
+            if (txtNombre.isEditable()) {
+                btnGuardar.setEnabled(true);
 
             } else {
 
                 btnGuardar.setEnabled(false);
             }
-
-        } else if (opcion == 2) {
+        }
+        else if (opcion == 0) {
             if (txtNombre.isEditable()) {
                 txtNombre.setEditable(false);
             } else {
@@ -522,11 +565,11 @@ public void changeStatus() {
                 txtContrasenia.setEditable(true);
             }
             if (txtNombre.isEditable()) {
-                btnGuardar.setEnabled(true);
+                btnGuardar.setEnabled(false);
 
             } else {
 
-                btnGuardar.setEnabled(false);
+                btnGuardar.setEnabled(true);
             }
         }
     }
@@ -550,18 +593,21 @@ public void changeStatus() {
             direccion = txtDireccion.getText();
             telefono = txtTelefono.getText();
             usuario = txtUsuario.getText();
-            contrasenia = txtContrasenia.getText();
-
-            String salida = conector.registrar("call registroMesero('" + nombre + "','" + apellidoP + "'," + direccion + "'," + telefono + "'," + usuario + "'," + contrasenia + ");");
-            JOptionPane.showMessageDialog(null, salida);
-            txtNombre.setText("");
-            txtApellido.setText("");
-            txtDireccion.setText("");
-            txtTelefono.setText("");
-            txtUsuario.setText("");
-            txtContrasenia.setText("");
-            consultaGeneralMesero();
-
+            contrasenia=txtContrasenia.getText();
+            try {
+                contrasenia = txtContrasenia.getText();
+                String salida = conector.registrar("call registroMesero('" + nombre + "','" + apellidoP + "','" + direccion + "','" + telefono + "','" + usuario + "'," + contrasenia + ");");
+                JOptionPane.showMessageDialog(null, salida);
+                txtNombre.setText("");
+                txtApellido.setText("");
+                txtDireccion.setText("");
+                txtTelefono.setText("");
+                txtUsuario.setText("");
+                txtContrasenia.setText("");
+                consultaGeneralMesero();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error intentelo de nuevo");
+            }
         }
 
     }
@@ -615,7 +661,7 @@ public void changeStatus() {
         telefono = txtTelefono.getText();
         usuario = txtUsuario.getText();
         contrasenia = txtContrasenia.getText();
-        String estado = conector.registrar("update mesero set nombre='" + nombre + "',apellidoP='" + apellidoP + "',direccion=" + direccion + "',telefono=" + telefono + "',usuario=" + usuario + "',contrasenia=" + contrasenia + " where noEmpleado=" + idSeleccionado + ";");
+        String estado = conector.registrar("update mesero set nombre='" + nombre + "',apellidoP='" + apellidoP + "',direccion='" + direccion + "',telefono='" + telefono + "',usuario='" + usuario + "',contrasenia=" + contrasenia + " where noEmpleado=" + idSeleccionado + ";");
         consultaGeneralMesero();
     }
 
